@@ -22,8 +22,23 @@ newClass.create = function (createclass, result) {
     });
 };
 
+// SELECT * FROM`new_class` ORDER BY`class_name` DESC
+// dari bawah ke atas, berdasarkan class name
+
 newClass.findByid = function (id, result) {
     dbConn.query("Select * from new_class where id = ? ", id, function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, res);
+        }
+    });
+};
+
+newClass.findByclass_name = function (class_name, result) {
+    dbConn.query("Select * from new_class where class_name like ? ", class_name, function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);

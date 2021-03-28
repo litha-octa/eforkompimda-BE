@@ -35,6 +35,18 @@ myCourses.findByid = function (id, result) {
     });
 };
 
+myCourses.findByclass_name = function (class_name, result) {
+    dbConn.query("Select * from courses where class_name like =?", class_name, function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, res);
+        }
+    });
+};
+
 myCourses.findBycategory = function (category, result) {
     dbConn.query("Select * from courses where category = ? ", category, function (err, res) {
         if (err) {

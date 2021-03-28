@@ -36,6 +36,11 @@ exports.findBypilih = function (req, res) {
                 res.send(err);
             res.json(new_class);
         });
+        case "class_name": return newClass.findByclass_name(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
         case "category": return newClass.findBycategory(req.params.value, function (err, new_class) {
             if (err)
                 res.send(err);
