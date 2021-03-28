@@ -8,6 +8,9 @@ app.get('/', (req, res) => {
 });
 const newclassRoutes = require('./src/routes/new_class.routes')
 app.use('/api/v1/newclass', newclassRoutes)
+
+const mycoursesRoutes = require('./src/routes/courses.routes')
+app.use('/api/v1/mycourses', mycoursesRoutes)
 // listen for requests
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
