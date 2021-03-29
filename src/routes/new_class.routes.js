@@ -7,6 +7,7 @@ router.get('/', new_classController.findAll);
 router.post('/', new_classController.create);
 // Retrieve a single employee with id
 router.get('/:pilih.:value', new_classController.findBypilih);
+router.get('/:column', new_classController.getdata);
 
 
 

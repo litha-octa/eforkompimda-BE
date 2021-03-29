@@ -7,9 +7,6 @@ router.get('/', coursesController.findAll);
 //router.post('/', coursesController.create);
 // Retrieve a single employee with id
 router.get('/:column.:value', coursesController.findBycolumn);
-
-
-
 // Update a employee with id
 router.put('/:id', coursesController.update);
 // Delete a employee with id

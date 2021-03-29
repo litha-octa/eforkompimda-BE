@@ -36,12 +36,12 @@ exports.findBycolumn = function (req, res) {
                 res.send(err);
             res.json(courses);
         });
-        case "class_name": return myCourses.findByclass_name(req.params.value, function (err, courses) {
+        case "category": return myCourses.findBycategory(req.params.value, function (err, courses) {
             if (err)
                 res.send(err);
             res.json(courses);
         });
-        case "category": return myCourses.findBycategory(req.params.value, function (err, courses) {
+        case "class_name": return myCourses.findByclass_name(req.params.value, function (err, courses) {
             if (err)
                 res.send(err);
             res.json(courses);

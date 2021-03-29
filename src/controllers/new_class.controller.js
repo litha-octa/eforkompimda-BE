@@ -1,4 +1,5 @@
 'use strict';
+const mysql = require("mysql");
 const newClass = require('../models/new_class.model');
 exports.findAll = function (req, res) {
     newClass.findAll(function (err, new_class) {
@@ -10,6 +11,7 @@ exports.findAll = function (req, res) {
     }
     );
 };
+
 
 // const findall = (param)=>{}
 
@@ -29,14 +31,34 @@ exports.create = function (req, res) {
     }
 };
 
+
+exports.getdata = function (req, res) {
+    const { sort, search } = req.query
+    const searchValue = "%" + search + "%";
+    const sortValue = sort.split(" ").map((el) => {
+        switch (el) {
+            case "AZ":
+                return mysql.raw("ASC");
+            case "ZA":
+                return mysql.raw("DESC");
+            default:
+                return mysql.raw(el);
+        }
+    })
+    const qsValue = [searchValue, ...sortValue]
+    newClass.findBySearch(qsValue, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            console.log(qsValue)
+            res.json(result);
+        }
+    })
+}
+
 exports.findBypilih = function (req, res) {
     switch (req.params.pilih) {
         case "id": return newClass.findByid(req.params.value, function (err, new_class) {
-            if (err)
-                res.send(err);
-            res.json(new_class);
-        });
-        case "class_name": return newClass.findByclass_name(req.params.value, function (err, new_class) {
             if (err)
                 res.send(err);
             res.json(new_class);
@@ -52,6 +74,41 @@ exports.findBypilih = function (req, res) {
             res.json(new_class);
         });
         case "pricing": return newClass.findBypricing(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
+    }
+}
+
+exports.sortBykolom = function (req, res) {
+    switch (req.params.kolom) {
+        case "level": return newClass.sortBylevelAS(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
+        case "level": return newClass.sortBylevelDESC(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
+        case "category": return newClass.sortBycategoryASC(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
+        case "category": return newClass.sortBycategoryDESC(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
+        case "pricing": return newClass.sortBypricingASC(req.params.value, function (err, new_class) {
+            if (err)
+                res.send(err);
+            res.json(new_class);
+        });
+        case "pricing": return newClass.sortBypricingDESC(req.params.value, function (err, new_class) {
             if (err)
                 res.send(err);
             res.json(new_class);

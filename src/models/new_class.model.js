@@ -22,23 +22,29 @@ newClass.create = function (createclass, result) {
     });
 };
 
-// SELECT * FROM`new_class` ORDER BY`class_name` DESC
-// dari bawah ke atas, berdasarkan class name
+newClass.findBySearch = function (qsValue) {
+    return new Promise((resolve, reject) => {
+        dbConn.query("Select * from new_class where class_name like ? ORDER BY ??", qsValue, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+    // dbConn.query {
+    //     if (err) {
+    //         console.log("error: ", err);
+    //         result(err, null);
+    //     }
+    //     else {
+    //         result(null, res);
+    //     }
+    // });
+};
 
 newClass.findByid = function (id, result) {
     dbConn.query("Select * from new_class where id = ? ", id, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, res);
-        }
-    });
-};
-
-newClass.findByclass_name = function (class_name, result) {
-    dbConn.query("Select * from new_class where class_name like ? ", class_name, function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -88,6 +94,84 @@ newClass.findBypricing = function (pricing, result) {
 
 newClass.findAll = function (result) {
     dbConn.query("Select * from new_class", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            console.log('class name : ', res);
+            result(null, res);
+        }
+    });
+};
+
+newClass.sortBylevelASC = function (result) {
+    dbConn.query("Select * from new_class order by level asc", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            console.log('class name : ', res);
+            result(null, res);
+        }
+    });
+};
+
+newClass.sortBylevelDESC = function (result) {
+    dbConn.query("Select * from new_class order by level desc", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            console.log('class name : ', res);
+            result(null, res);
+        }
+    });
+};
+
+newClass.sortBycategoryASC = function (result) {
+    dbConn.query("Select * from new_class order by category asc", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            console.log('class name : ', res);
+            result(null, res);
+        }
+    });
+};
+
+newClass.sortBycategoryDESC = function (result) {
+    dbConn.query("Select * from new_class order by category desc", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            console.log('class name : ', res);
+            result(null, res);
+        }
+    });
+};
+
+newClass.sortBypricingASC = function (result) {
+    dbConn.query("Select * from new_class order by pricing asc", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            console.log('class name : ', res);
+            result(null, res);
+        }
+    });
+};
+
+newClass.sortBypricingDESC = function (result) {
+    dbConn.query("Select * from new_class order by pricing desc", function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(null, err);
