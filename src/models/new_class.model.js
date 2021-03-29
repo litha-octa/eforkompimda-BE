@@ -32,16 +32,42 @@ newClass.findBySearch = function (qsValue) {
             }
         });
     });
-    // dbConn.query {
-    //     if (err) {
-    //         console.log("error: ", err);
-    //         result(err, null);
-    //     }
-    //     else {
-    //         result(null, res);
-    //     }
-    // });
 };
+newClass.sortlevel = function (qsValue) {
+    return new Promise((resolve, reject) => {
+        dbConn.query("Select * from new_class where level like ? ORDER BY ? ?", qsValue, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+};
+newClass.sortcategory = function (qsValue) {
+    return new Promise((resolve, reject) => {
+        dbConn.query("Select * from new_class where category like ? ORDER BY ? ?", qsValue, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+};
+newClass.sortpricing = function (qsValue) {
+    return new Promise((resolve, reject) => {
+        dbConn.query("Select * from new_class where pricing like ? ORDER BY ? ?", qsValue, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
+};
+
+
 
 newClass.findByid = function (id, result) {
     dbConn.query("Select * from new_class where id = ? ", id, function (err, res) {
@@ -105,84 +131,7 @@ newClass.findAll = function (result) {
     });
 };
 
-newClass.sortBylevelASC = function (result) {
-    dbConn.query("Select * from new_class order by level asc", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
-
-newClass.sortBylevelDESC = function (result) {
-    dbConn.query("Select * from new_class order by level desc", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
-
-newClass.sortBycategoryASC = function (result) {
-    dbConn.query("Select * from new_class order by category asc", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
-
-newClass.sortBycategoryDESC = function (result) {
-    dbConn.query("Select * from new_class order by category desc", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
-
-newClass.sortBypricingASC = function (result) {
-    dbConn.query("Select * from new_class order by pricing asc", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
-
-newClass.sortBypricingDESC = function (result) {
-    dbConn.query("Select * from new_class order by pricing desc", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
-
+/*
 newClass.update = function (id, new_class, result) {
     dbConn.query("UPDATE new_class SET class_name=?,category=?,description=?,level=?,pricing=? WHERE id = ?",
         [newClass.class_name, newClass.category, newClass.description, newClass.level, newClass.pricing, id], function (err, res) {
@@ -195,6 +144,9 @@ newClass.update = function (id, new_class, result) {
             }
         });
 };
+*/
+
+newClass.update = function (id, new_class, result) { dbConn.query("UPDATE new_class SET class_name=?,category=?,description=?,level=?,pricing=? WHERE id = ?", [newClass.class_name, newClass.category, newClass.description, newClass.level, newClass.pricing, id], function (err, res) { if (err) { console.log("error: ", err); result(null, err); } else { result(null, res); } }); };
 
 newClass.delete = function (id, result) {
     dbConn.query("DELETE FROM new_class WHERE id = ?", [id], function (err, res) {

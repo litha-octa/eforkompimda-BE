@@ -6,14 +6,15 @@ router.get('/', new_classController.findAll);
 // Create a new employee
 router.post('/', new_classController.create);
 // Retrieve a single employee with id
-//router.get('/:pilih.:value', new_classController.findBypilih);
+router.get('/: pilih.: value', new_classController.findBypilih);
 router.get('/:search', new_classController.getdata);
 
 
 
+
 // Update a employee with id
-//router.put('/:id', new_classController.update);
+router.put('/:id', new_classController.update);
 // Delete a employee with id
-//router.delete('/:id', new_classController.delete);
+router.delete('/:id', new_classController.delete);
 
 module.exports = router
