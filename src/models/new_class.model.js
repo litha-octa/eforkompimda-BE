@@ -24,7 +24,7 @@ newClass.create = function (createclass, result) {
 
 newClass.findBySearch = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select * from new_class where class_name like ? ORDER BY ??", qsValue, (err, res) => {
+        dbConn.query("Select * from new_class where class_name like ? ORDER BY ? ?", qsValue, (err, res) => {
             if (err) {
                 reject(err);
             } else {
