@@ -22,6 +22,7 @@ newClass.create = function (createclass, result) {
     });
 };
 
+
 newClass.findBySearch = function (qsValue) {
     return new Promise((resolve, reject) => {
         dbConn.query("Select * from new_class where class_name like ? ORDER BY ? ?", qsValue, (err, res) => {
@@ -33,6 +34,8 @@ newClass.findBySearch = function (qsValue) {
         });
     });
 };
+
+
 newClass.sortlevel = function (qsValue) {
     return new Promise((resolve, reject) => {
         dbConn.query("Select * from new_class where level like ? ORDER BY ? ?", qsValue, (err, res) => {
@@ -131,10 +134,10 @@ newClass.findAll = function (result) {
     });
 };
 
-/*
+
 newClass.update = function (id, new_class, result) {
     dbConn.query("UPDATE new_class SET class_name=?,category=?,description=?,level=?,pricing=? WHERE id = ?",
-        [newClass.class_name, newClass.category, newClass.description, newClass.level, newClass.pricing, id], function (err, res) {
+        [new_class.class_name, new_class.category, new_class.description, new_class.level, new_class.pricing, id], function (err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
@@ -144,10 +147,6 @@ newClass.update = function (id, new_class, result) {
             }
         });
 };
-*/
-
-newClass.update = function (id, new_class, result) { dbConn.query("UPDATE new_class SET class_name=?,category=?,description=?,level=?,pricing=? WHERE id = ?", [newClass.class_name, newClass.category, newClass.description, newClass.level, newClass.pricing, id], function (err, res) { if (err) { console.log("error: ", err); result(null, err); } else { result(null, res); } }); };
-
 newClass.delete = function (id, result) {
     dbConn.query("DELETE FROM new_class WHERE id = ?", [id], function (err, res) {
         if (err) {
