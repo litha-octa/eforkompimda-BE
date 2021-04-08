@@ -1,16 +1,18 @@
+require("dotenv").config();
 const express = require('express');
-const newclassController = require('./src/controllers/new_class.controller')
+const { PORT } = process.env;
+//const newclassController = require('./src/controllers/all_class.controller')
 const app = express();// Setup server port
-const port = 8300;// parse requests of content-type - application/x-www-form-urlencoded
+const port = PORT// prse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }))// parse requests of content-type - application/json
 app.use(express.json())// define a root route
 app.get('/', (req, res) => {
   res.send("Hello World");
 });
-const newclassRoutes = require('./src/routes/new_class.routes')
-
+const newclassRoutes = require('./src/routes/all_class.routes')
+const loginRegist = require('./src/routes/auth')
 app.use('/api/v1/newclass', newclassRoutes)
-
+app.use('/api/v1/auth', loginRegist)
 // const mycoursesRoutes = require('./src/routes/courses.routes')
 // app.use('/api/v1/mycourses', mycoursesRoutes)
 // listen for requests

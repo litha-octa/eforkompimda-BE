@@ -1,13 +1,14 @@
 'use stirct';
+
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
 const mysql = require('mysql');
-const dbConn = mysql.createConnection({  
-    host     : 'localhost',  
-    user     : 'root',  
-    password : '',  
-    database : 'smarteduapp'
-});
-dbConn.connect(function(err) {  
-    if (err) throw err;  
-    console.log("Database Connected!");
-});
-module.exports = dbConn;
+
+const config = {
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_DATABASE
+}
+const db = mysql.createConnection(config);
+
+module.exports = db;
