@@ -6,10 +6,10 @@ const {
 } = require("../helpers/response");
 
 
-const getPagination = (req, res) => {
+exports.getPagination = (req, res) => {
     const { query, baseUrl, path, hostname, protocol } = req;
     paginationModel
-        .getAllPagination(query)
+        .getPagination(query)
         .then((finalResult) => {
             const { result, count, page, limit } = finalResult;
             const totalPage = Math.ceil(count / limit);
@@ -39,4 +39,4 @@ const getPagination = (req, res) => {
         });
 };
 
-module.exports = getPagination;
+//module.exports = getPagination;

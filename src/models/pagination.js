@@ -2,7 +2,8 @@ const dbConn = require('./../../config/db.config');
 
 
 
-const getPagination = (query) => {
+//exports.getPagination = (query) => {
+exports.getPagination = (query) => {
     return new Promise((resolve, reject) => {
         const qs =
             'SELECT all_class.class_id, all_class.class_name, all_class.pricing, category.category_name AS "category", level.level_name AS "level" FROM all_class JOIN category ON all_class.category_id = category.category_id JOIN level ON all_class.level_id = level.level_id'
@@ -17,7 +18,7 @@ const getPagination = (query) => {
         // null | undefined
         const page = Number(query.page) || 1;
         const offset = (page - 1) * limit;
-        // console.log(limit, page, offset);
+        //console.log(limit, page, offset);
         dbConn.query(qsWithPaginate, [limit, offset], (err, result) => {
             if (err) return reject(err);
 
@@ -40,4 +41,4 @@ const getPagination = (query) => {
     });
 };
 
-module.exports = getPagination;
+//module.exports = getPagination;

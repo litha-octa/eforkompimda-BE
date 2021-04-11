@@ -36,7 +36,7 @@ const login = (body) => {
     return new Promise((resolve, reject) => {
         const { name, password } = body;
         const qs =
-            "SELECT user.name AS 'username', user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE user.name= ?";
+            "SELECT user.email, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE user.name= ?";
         dbConn.query(qs, name, (err, result) => {
             if (err) return reject({ msg: err, status: 500 });
             if (result.length === 0)
