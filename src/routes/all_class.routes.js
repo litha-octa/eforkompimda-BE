@@ -13,8 +13,6 @@ router.get('/sort', all_classController.sortlevel);
 router.get('/sort', all_classController.sortcategory);
 router.get('/sort', all_classController.sortpricing);
 
-
-
 // Update a course with id
 router.put('/:id', all_classController.update);
 // Delete a courses with id

@@ -10,6 +10,7 @@ const register = (body) => {
     //   };
     return new Promise((resolve, reject) => {
         const { password } = body;
+        // const qs = "INSERT user.name,user.email, user.password, role.role_name AS 'role' INTO user JOIN role ON user.role_id = role.role_id SET ?";
         const qs = "INSERT INTO user SET ?";
         bcrypt.hash(password, 10, (err, encryptedPass) => {
             if (err) return reject(err);

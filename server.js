@@ -11,8 +11,10 @@ app.get('/', (req, res) => {
 });
 const newclassRoutes = require('./src/routes/all_class.routes')
 const loginRegist = require('./src/routes/auth')
+const pagination = require('./src/routes/pagination')
 app.use('/api/v1/newclass', newclassRoutes)
 app.use('/api/v1/auth', loginRegist)
+app.use('/api/v1/pag', pagination)
 // const mycoursesRoutes = require('./src/routes/courses.routes')
 // app.use('/api/v1/mycourses', mycoursesRoutes)
 // listen for requests
