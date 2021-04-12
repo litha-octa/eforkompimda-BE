@@ -9,10 +9,6 @@ const storage = multer.diskStorage({
         const nameFormat = `${Date.now()}-${file.fieldname}${path.extname(
             file.originalname
         )}`;
-        // upload gambar-bola.jpg via field image
-        // timestamp-image.jpg
-        // userId-field-timestamp.extension
-        // courseId-field-timestamp.extension
         cb(null, nameFormat);
     },
 });

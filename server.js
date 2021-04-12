@@ -19,10 +19,10 @@ app.use('/api/v1/newclass', newclassRoutes)
 app.use('/api/v1/auth', loginRegist)
 app.use('/api/v1/pag', pagination)
 app.use('/api/v1/up', upload)
-//app.use('/api/v1/authrz', authorize)
-// const mycoursesRoutes = require('./src/routes/courses.routes')
-// app.use('/api/v1/mycourses', mycoursesRoutes)
-// listen for requests
+
+
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
+
+app.use(express.static("public"));
