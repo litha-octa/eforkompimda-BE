@@ -1,9 +1,7 @@
 const dbConn = require('./../../config/db.config');
 
-
-
-//exports.getPagination = (query) => {
 exports.getPagination = (query) => {
+    //const getPagination = (query) => {
     return new Promise((resolve, reject) => {
         const qs =
             'SELECT all_class.class_id, all_class.class_name, all_class.pricing, category.category_name AS "category", level.level_name AS "level" FROM all_class JOIN category ON all_class.category_id = category.category_id JOIN level ON all_class.level_id = level.level_id'

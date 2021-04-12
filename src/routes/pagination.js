@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const paginationController = require("../controllers/pagination");
-// params => path params(:), query params(?)
-router.get("/all", paginationController.getPagination);
 
-// Router.get("/", authorize.managerOnly, videogamesHandler.getAllVideogames);
 
-// Router.get("/:id", authorize.VIPOnly, videogamesHandler.getVideogamesWithId);
+router.get("/", paginationController.getPagination);
 
 module.exports = router;

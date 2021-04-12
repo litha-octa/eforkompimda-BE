@@ -24,7 +24,7 @@ newClass.create = function (createclass, result) {
 
 newClass.findBySearch = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where class_name like ? ORDER BY ? ?", qsValue, (err, res) => {
+        dbConn.query("Select  all_class.class_id, all_class.class_name, category.category_name AS 'category', all_class.description, level.level_name AS 'level', all_class.pricing FROM all_class INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id where class_name like ? ORDER BY ? ?", qsValue, (err, res) => {
             if (err) {
                 reject(err);
             } else {
