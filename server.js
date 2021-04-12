@@ -6,6 +6,7 @@ const app = express();// Setup server port
 const port = PORT// prse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }))// parse requests of content-type - application/json
 app.use(express.json())// define a root route
+app.use(express.static("public"))
 app.get('/', (req, res) => {
   res.send("Hello World");
 });
@@ -25,4 +26,3 @@ app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
-app.use(express.static("public"));

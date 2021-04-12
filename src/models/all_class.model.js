@@ -1,7 +1,7 @@
 'use strict';
 const dbConn = require('./../../config/db.config');
 
-let newClass = function (all_class) {
+const newClass = function (all_class) {
     this.class_name = all_class.class_name;
     this.category_id = all_class.category_id;
     this.description = all_class.description;
@@ -148,11 +148,6 @@ newClass.update = function (class_id, all_class, result) {
         });
 };
 newClass.delete = function (input_id, result) {
-    // dbConn.query("SELECT class_id FROM all_class WHERE class_id = input_id")[input_id], function (err, res) {
-    // if (dbConn !== input_id) {
-    //     return ("error: id tidak ditemukan !");
-    // }
-    // else {
     dbConn.query("DELETE FROM all_class WHERE class_id = ?", [input_id], function (err, res) {
         if (err) {
             console.log("error: ", err);
