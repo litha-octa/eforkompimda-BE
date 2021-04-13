@@ -14,12 +14,14 @@ const newclassRoutes = require('./src/routes/all_class.routes')
 const loginRegist = require('./src/routes/auth')
 const pagination = require('./src/routes/pagination')
 const upload = require('./src/routes/upload')
+const upprof = require('./src/routes/profile')
 //const authorize = require('./src/routes/authorize')
 
 app.use('/api/v1/newclass', newclassRoutes)
 app.use('/api/v1/auth', loginRegist)
 app.use('/api/v1/pag', pagination)
 app.use('/api/v1/up', upload)
+app.use('/api/v1/upprof', upprof)
 
 
 app.listen(port, () => {

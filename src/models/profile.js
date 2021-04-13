@@ -1,25 +1,41 @@
-const dbConn = require("../config/db.config");
+const dbConn = require('./../../config/db.config');
+const bcrypt = require('bcrypt');
+//const jwt = require('jsonwebtoken');
 
-const profile = function (user) {
-    this.name = user.name;
-    this.email = user.email;
-    this.password = user.password;
-    this.role_id = user.role_id;
-    this.pics = user.pics;
-};
+exports.updateUserById = (data, user_id) => {
+    const qs = 'UPDATE user SET ? WHERE user_id = ? ';
+    const updated = [data, user_id];
+    return new Promise((resolve, reject) => {
+        data.password
+            ? bcrypt.hash(data.password, 10, (err, encryptedPass) => {
+                if (err) return reject({ status: 500 });
 
-profile.updateProfile = function (user, result) {
-    dbConn.query("UPDATE user SET ? where user_id = ?",
-        db.query(sqlQuery, [params, userId], (error, results) => {
-            [result, user_id], function (err, res) {
+                data.password = encryptedPass;
+
+                dbConn.query(qs, updated, (err, result) => {
+                    if (err) {
+                        reject({
+                            status: 500,
+                        });
+                    } else {
+                        if (result.affectedRows === 0)
+                            return reject({
+                                status: 401,
+                                success: false,
+                                msg: 'This account does not exist',
+                            });
+                        resolve(result);
+                    }
+                });
+            })
+            : dbConn.query(qs, updated, (err, result) => {
                 if (err) {
-                    console.log("error: ", err);
-                    result(null, err);
-                }
-                else {
-                    result(null, res);
+                    reject({ status: 500 });
+                } else {
+                    resolve(result);
                 }
             });
+    });
 };
 
-module.exports = profile;
+//module.exports = updateUserById;
