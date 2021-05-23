@@ -1,5 +1,9 @@
 // const Router = require("express").Router();
 // const authorize = require("../middle/authorize");
+// const auth = require("./auth");
+// const upprof = require('./profile');
+// const all_class = require('./all_class.routes');
+// const UserClass = require('./userClass');
 
 
 // Router.use((req, res, next) => {
@@ -10,15 +14,18 @@
 //         return res.sendStatus(200);
 //     }
 //     next();
-//     // res.send(200);
 // });
-// Router.get("/student", authorize.student);
 
-// Router.get("/teacher", authorize.teacher);
 
-// //const authMiddleware = require("../middlewares/authorize");
-// Router.get("/", authorize.byRole("student"), (req, res) => {
-//     res.json({ msg: "Hello" });
+// Router.use("/auth", auth);
+// Router.use('/newclass', all_class);
+// Router.use('/upprof', upprof);
+// Router.use('/usrcls', userClass);
+
+// Router.post("/", (req, res) => {
+//   //  console.log(req.body);
+//   res.send(req.body);
 // });
+
 
 // module.exports = Router;

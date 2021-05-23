@@ -1,3 +1,5 @@
+//const { response } = require('express');
+
 const writeResponse = (res, header, status, result) => {
     let response;
     if (header) {
@@ -13,9 +15,18 @@ const writeResponse = (res, header, status, result) => {
     res.status(status).json(response);
 };
 
-const writeError = (res, status, err) => {
-    res.status(status).json(new Error(err));
+const writeError = (res, status, error) => {
+    let response;
+    if (error) {
+        response = {
+            error,
+        };
+    }
+    res.status(status).json(response);
 };
+// const writeError = (res, status, err) => {
+//     res.status(status).json(new Error(err));
+// };
 
 const writeResponsePaginated = (res, status, result, info) => {
     let response = {};

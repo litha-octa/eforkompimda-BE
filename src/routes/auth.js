@@ -3,19 +3,12 @@ const express = require('express')
 const router = express.Router()
 
 const autcontroller = require("../controllers/auth");
-// Router.get("/", (_, res) => {
-//   res.json({
-//     message: "auth",
-//   });
-// });
 
-// login
-router.post("/login", autcontroller.login);
+//LOGIN
+router.post("/", autcontroller.login);
 
-// register
-router.post("/register", autcontroller.register);
+//REGISTER
+router.post("/regis", autcontroller.register);
 
-// logout
-//Router.delete("/logout", (req, res) => { });
 
 module.exports = router;

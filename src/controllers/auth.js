@@ -12,6 +12,26 @@ const login = (req, res) => {
         });
 };
 
+// const register = (req, res) => {
+//     const data = { ...req.body };
+//     authModel
+//         .register(data)
+//         .then((result) => {
+//             if (result) {
+//                 writeResponse(res, null, 201, {
+//                     success: true,
+//                     message: 'Your account has been successfully registered',
+//                 });
+//             }
+//         })
+//         .catch((err) => {
+//             writeError(res, err.status, {
+//                 success: err.success,
+//                 conflict: err.conflict,
+//                 message: err.msg,
+//             });
+//         });
+// };
 const register = (req, res) => {
     authModel
         .register(req.body)

@@ -31,7 +31,8 @@ const login = (body) => {
     return new Promise((resolve, reject) => {
         const { name, password } = body;
         const qs =
-            "SELECT user.email, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE user.name= ?";
+            //"SELECT user.name, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE user.email= ?";
+            "SELECT user.name, user.email, user.avatar, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE  user.email= ? ";
         dbConn.query(qs, name, (err, result) => {
             if (err) return reject({ msg: err, status: 500 });
             if (result.length === 0)
@@ -40,10 +41,12 @@ const login = (body) => {
                 if (err) return reject({ msg: err, status: 500 });
                 if (!isPasswordValid)
                     return reject({ msg: "Email or Password is Wrong", status: 401 });
-                const { username, role } = result[0];
+                const { name, email, role, avatar} = result[0];
                 const payload = {
-                    username,
+                    name,
+                    email,
                     role,
+                    avatar
                 };
                 const options = {
                     expiresIn: process.env.EXPIRE,

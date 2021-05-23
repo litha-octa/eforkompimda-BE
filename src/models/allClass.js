@@ -6,20 +6,38 @@ const newClass = function (all_class) {
     this.category_id = all_class.category_id;
     this.description = all_class.description;
     this.level_id = all_class.level_id;
+    this.schedule = all_class.schedule;
     this.pricing = all_class.pricing;
+    this.avatar = all_class.avatar;
 };
 newClass.create = function (createclass, result) {
+    //const added = [data, createclass];
+    console.log(createclass)
     dbConn.query("INSERT INTO all_class set ?", createclass, function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);
         }
         else {
-            console.log(res.insertclass_id);
+            console.log(res);
             result(null, res.insertclass_id);
         }
     });
 };
+// newClass.create = function (data, createclass) {
+//     const add= 'INSERT INTO all_class set ?';
+//     const added = [data, createclass];
+//     return new Promise((err, res) => { 
+//          dbConn.query(add, added, (err, result) => {
+//              //return new Promise((resolve, reject) => {
+//             if (err) {
+//                 reject({ status: 500 });
+//             } else {
+//                 resolve(result);
+//             }
+//     });
+//          }
+// ,};
 
 
 newClass.findBySearch = function (qsValue) {
@@ -120,18 +138,18 @@ newClass.sortpricing = function (qsValue) {
 //     });
 // };
 
-newClass.findAll = function (result) {
-    dbConn.query("SELECT class_id, class_name, category.category_name, description, level.level_name, pricing FROM all_class INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            console.log('class name : ', res);
-            result(null, res);
-        }
-    });
-};
+// newClass.findAll = function (result) {
+//     dbConn.query("SELECT class_id, class_name, category.category_name, description, level.level_name, pricing FROM all_class INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id", function (err, res) {
+//         if (err) {
+//             console.log("error: ", err);
+//             result(null, err);
+//         }
+//         else {
+//             console.log('class name : ', res);
+//             result(null, res);
+//         }
+//     });
+// };
 
 
 

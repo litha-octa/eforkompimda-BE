@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const paginationController = require("../controllers/pagination");
+// const express = require('express');
+// const router = express.Router();
+// const paginationController = require("../controllers/pagination");
 
 
-router.get("/", paginationController.getPagination);
+// router.get("/", paginationController.getPagination);
 
-module.exports = router;
+// module.exports = router;

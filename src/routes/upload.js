@@ -1,6 +1,6 @@
 const Router = require("express").Router();
 const multerUploadImage = require("../middle/upload");
-const all_classController = require('../controllers/all_class.controller');
+const all_classController = require('../controllers/allClass');
 
 
 

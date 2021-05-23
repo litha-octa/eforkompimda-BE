@@ -38,4 +38,25 @@ exports.updateUserById = (data, user_id) => {
     });
 };
 
+exports.getUser = (user_id) => {
+  const qs = "SELECT * FROM user WHERE user_id = ? ";
+  return new Promise((resolve, reject) => {
+    dbConn.query(qs, user_id, (err, result) => {
+      if (err) {
+        reject({ status: 500 });
+      } else {
+        if (result.length === 0)
+          return reject({
+            status: 401,
+            success: false,
+            msg: "This account does not exist",
+          });
+
+        result[0].role = result[0].role_id === 1 ? "student" : "teacher";
+        resolve(result);
+      }
+    });
+  });
+};
+
 //module.exports = updateUserById;

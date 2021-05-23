@@ -19,11 +19,11 @@ exports.getPagination = (req, res) => {
             const url =
                 protocol + "://" + hostname + ":" + process.env.PORT + baseUrl + path;
             const prev =
-                page === 1 ? null : url + `?page=${page - 1}&limit=${query.limit || 3}`;
+                page === 1 ? null : url + `?page=${page - 1}&limit=${query.limit || 5}`;
             const next =
                 page === totalPage
                     ? null
-                    : url + `?page=${page + 1}&limit=${query.limit || 3}`;
+                    : url + `?page=${page + 1}&limit=${query.limit || 5}`;
             const info = {
                 count,
                 page,
