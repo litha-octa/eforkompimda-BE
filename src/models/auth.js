@@ -41,8 +41,9 @@ const login = (body) => {
                 if (err) return reject({ msg: err, status: 500 });
                 if (!isPasswordValid)
                     return reject({ msg: "Email or Password is Wrong", status: 401 });
-                const { name, email, role, avatar} = result[0];
+                const { user_id, name, email, role, avatar} = result[0];
                 const payload = {
+                    user_id,
                     name,
                     email,
                     role,
