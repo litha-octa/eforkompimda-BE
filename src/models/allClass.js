@@ -24,38 +24,26 @@ newClass.create = function (createclass, result) {
         }
     });
 };
-// newClass.create = function (data, createclass) {
-//     const add= 'INSERT INTO all_class set ?';
-//     const added = [data, createclass];
-//     return new Promise((err, res) => { 
-//          dbConn.query(add, added, (err, result) => {
-//              //return new Promise((resolve, reject) => {
-//             if (err) {
-//                 reject({ status: 500 });
-//             } else {
-//                 resolve(result);
-//             }
-//     });
-//          }
-// ,};
-
-
 newClass.findBySearch = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select  all_class.class_id, all_class.class_name, category.category_name AS 'category', all_class.description, level.level_name AS 'level', all_class.pricing FROM all_class INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id where class_name like ? ORDER BY ? ?", qsValue, (err, res) => {
+        dbConn.query(
+          "Select  all_class.class_id, all_class.class_name, category.category_name AS 'category' all_class.description, level.level_name AS 'level', all_class.pricing FROM all_class INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id where class_name like ? ORDER BY ? ?",
+          qsValue,
+          (err, res) => {
             if (err) {
-                reject(err);
+              reject(err);
             } else {
-                resolve(res);
+              resolve(res);
             }
-        });
+          }
+        );
     });
 };
 
 
 newClass.sortlevel = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where level like ? ORDER BY ? ?", qsValue, (err, res) => {
+        dbConn.query("Select * from all_class where level_id ORDER BY ? ?", qsValue, (err, res) => {
             if (err) {
                 reject(err);
             } else {
@@ -66,7 +54,7 @@ newClass.sortlevel = function (qsValue) {
 };
 newClass.sortcategory = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where category like ? ORDER BY ? ?", qsValue, (err, res) => {
+        dbConn.query("Select * from all_class where category_id ORDER BY ? ?", qsValue, (err, res) => {
             if (err) {
                 reject(err);
             } else {
@@ -77,7 +65,7 @@ newClass.sortcategory = function (qsValue) {
 };
 newClass.sortpricing = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where pricing like ? ORDER BY ? ?", qsValue, (err, res) => {
+        dbConn.query("Select * from all_class where pricing ORDER BY ? ?", qsValue, (err, res) => {
             if (err) {
                 reject(err);
             } else {
@@ -89,17 +77,48 @@ newClass.sortpricing = function (qsValue) {
 
 
 
-// newClass.findByclass_id = function (class_id, result) {
-//     dbConn.query("Select * from all_class where class_id = ? ", class_id, function (err, res) {
-//         if (err) {
-//             console.log("error: ", err);
-//             result(err, null);
-//         }
-//         else {
-//             result(null, res);
-//         }
-//     });
-// };
+newClass.filterCategory = function (qsValue) {
+     return new Promise((resolve, reject) => {
+    dbConn.query("Select * from all_class where category_id like ? ", qsValue,  (err, res) => {
+        if (err) {
+            reject(err);
+        }
+        else {
+            resolve(res);
+        }
+        });
+     });
+}; 
+newClass.filterLevel = function (qsValue) {
+  return new Promise((resolve, reject) => {
+    dbConn.query(
+      "Select * from all_class where level_id like ? ",
+      qsValue,
+      (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      }
+    );
+  });
+}; 
+newClass.filterPricing = function (qsValue) {
+  return new Promise((resolve, reject) => {
+    dbConn.query(
+      "Select * from all_class where pricing like ? ",
+      qsValue,
+      (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      }
+    );
+  });
+}; 
 
 // newClass.findBycategory = function (category, result) {
 //     dbConn.query("Select * from all_class where category = ? ", category, function (err, res) {

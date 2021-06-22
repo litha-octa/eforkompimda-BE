@@ -34,27 +34,6 @@ exports.create = function (req, res) {
     }
 };
 
-
-// exports.create = (req, res) => {
-//     const { files } = req;
-//     const avatar = files.length > 0 ? `/image/${files[0].filename}` : null;
-//     const img = files.length > 0 ? { ...req.body, avatar } : { ...req.body };
-//     //const newClasses = new newClass(req.body, img);
-//     newClass
-//         .create(req.body, img)
-//         .then((result) => {
-//             writeResponse(res, null, 200, result);
-//         })
-//         .catch((err) => {
-//             writeError(res, err.status, {
-//                 success: err.success,
-//                 conflict: err.conflict,
-//                 message: err.msg,
-//             });
-//         });
-// };
-
-
 exports.getdata = function (req, res) {
     const { sort, search } = req.query
     let searchValue
@@ -77,20 +56,8 @@ exports.getdata = function (req, res) {
             }
         })
     } else {
-        sortValue = [mysql.raw("class_name"), mysql.raw("ASC")]
+        sortValue = [mysql.raw("class_name"), mysql.raw("DESC")]
     }
-
-    // const searchValue = "%" + search + "%";
-    // const sortValue = sort.split("-").map((el) => {
-    //     switch (el) {
-    //         case "AZ":
-    //             return mysql.raw("ASC");
-    //         case "ZA":
-    //             return mysql.raw("DESC");
-    //         default:
-    //             return mysql.raw(el);
-    //     }
-    //})
     const qsValue = [searchValue, ...sortValue]
     console.log(qsValue)
     newClass.findBySearch(qsValue)
@@ -150,34 +117,92 @@ exports.sortpricing = function (req, res) {
     return;
 };
 
+exports.filterCategory = function (req, res) {
+    const { search } = req.query
+    let searchValue
+    if (search) {
+        searchValue = "%" + search + "%";
 
-
-
-
-exports.findBypilih = function (req, res) {
-    switch (req.params.pilih) {
-        case "id": return newClass.findByid(req.params.value, function (err, all_class) {
-            if (err)
-                res.send(err);
-            res.json(all_class);
-        });
-        case "category": return newClass.findBycategory(req.params.value, function (err, all_class) {
-            if (err)
-                res.send(err);
-            res.json(all_class);
-        });
-        case "level": return newClass.findBylevel(req.params.value, function (err, all_class) {
-            if (err)
-                res.send(err);
-            res.json(all_class);
-        });
-        case "pricing": return newClass.findBypricing(req.params.value, function (err, all_class) {
-            if (err)
-                res.send(err);
-            res.json(all_class);
-        });
+    } else {
+        searchValue = "%%"
     }
+const qsValue = [searchValue]
+    console.log(qsValue)
+    newClass.filterCategory(qsValue)
+        .then(result => { res.json(result); })
+        .catch(err => { res.send(err); })
+    
 };
+exports.filterLevel = function (req, res) {
+  const { search } = req.query;
+  let searchValue;
+  if (search) {
+    searchValue = "%" + search + "%";
+  } else {
+    searchValue = "%%";
+  }
+  const qsValue = [searchValue];
+  console.log(qsValue);
+  newClass
+    .filterLevel(qsValue)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+exports.filterPricing = function (req, res) {
+  const { search } = req.query;
+  let searchValue;
+  if (search) {
+    searchValue = "%" + search + "%";
+  } else {
+    searchValue = "%%";
+  }
+  const qsValue = [searchValue];
+  console.log(qsValue);
+  newClass
+    .filterPricing(qsValue)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
+
+
+// exports.findBy = function (req, res) {
+//     switch (req.params.pilih) {
+//         // case "id": return newClass.findByid(req.params.value, function (err, all_class) {
+//         //     if (err)
+//         //         res.send(err);
+//         //     res.json(all_class);
+//         // });
+//         case "category_id": return newClass.filter(req.params.value, function (err, all_class) {
+//             const { search } = req.query;
+//             let searchValue;
+//             let sortValue;
+//             if (search) {
+//               searchValue = "%" + search + "%";
+//             } else {
+//               searchValue = "%%";
+//             }
+//         });
+        // case "level_id": return newClass.findBylevel(req.params.value, function (err, all_class) {
+        //     if (err)
+        //         res.send(err);
+        //     res.json(all_class);
+        // });
+        // case "pricing": return newClass.findBypricing(req.params.value, function (err, all_class) {
+        //     if (err)
+        //         res.send(err);
+        //     res.json(all_class);
+        // });
+//     }
+// };
 
 exports.update = function (req, res) {
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
