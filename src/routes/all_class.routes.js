@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const all_classController = require('../controllers/allClass');
-const authorize = require("../middle/authorize");
+//const authorize = require("../middle/authorize");
 const pagination = require("../controllers/pagination");
 const multerUpload = require('../middle/upload');
 
@@ -16,14 +16,15 @@ router.get('/', pagination.getPagination, all_classController.getdata);
 // "sort" = "pilih kolom yang mau di urutkan"-"metode urutan"
 // misalnya category;
 // jadi '/sort/?sort=category-AZ' 
-router.get("/sort", all_classController.sortpricing);
-router.get("/sort", all_classController.sortlevel);
-router.get("/sort", all_classController.sortcategory);
+router.get("/sort", all_classController.sort);
+// router.get("/sort", all_classController.sortlevel);
+// router.get("/sort", all_classController.sortcategory);
 
 // filter
 router.get("/category", all_classController.filterCategory);
 router.get("/level", all_classController.filterLevel);
 router.get("/pricing", all_classController.filterPricing);
+router.get("/:id", all_classController.findById);
 
 
 
@@ -34,8 +35,8 @@ router.get("/pricing", all_classController.filterPricing);
 
 
 
-//router.post('/', all_classController.create);
-// router.put('/:id', all_classController.update);
+router.delete('/:id', all_classController.delete);
+ router.post('/:id', all_classController.update);
 // router.delete('/:id', all_classController.delete);
 
 // SORT AND SEARCH FOR STUDENT

@@ -55,9 +55,9 @@ exports.updateUserById = (req, res) => {
     const { files } = req;
     const avatar = files.length > 0 ? `/images/${files[0].filename}` : null;
     const data = files.length > 0 ? { ...req.body, avatar } : { ...req.body };
-    const user_id = req.params.id;
+    const userid = req.token__user_id;
     userModel
-        .updateUserById(data, user_id)
+        .updateUserById(data, userid)
         .then((result) => {
             writeResponse(res, null, 200, result);
         })
@@ -71,9 +71,9 @@ exports.updateUserById = (req, res) => {
 };
 
 exports.getUser = (req, res) => {
-    const user_id = req.params.id
+    const userId = req.params.email
     userModel
-        .getUser(user_id)
+        .getUser(userId)
         .then((result) => {
             writeResponse(res, null, 200, result);
         })

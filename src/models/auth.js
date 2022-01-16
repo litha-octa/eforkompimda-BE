@@ -32,7 +32,7 @@ const login = (body) => {
         const { name, password } = body;
         const qs =
             //"SELECT user.name, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE user.email= ?";
-            "SELECT user.name, user.email, user.avatar, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE  user.email= ? ";
+            "SELECT user.user_id, user.name, user.email, user.avatar, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE  user.email= ? ";
         dbConn.query(qs, name, (err, result) => {
             if (err) return reject({ msg: err, status: 500 });
             if (result.length === 0)
@@ -53,11 +53,13 @@ const login = (body) => {
                     expiresIn: process.env.EXPIRE,
                     issuer: process.env.ISSUER,
                 };
-                jwt.sign(payload, process.env.SECRET_KEY, options, (err, token) => {
-                    if (err) return reject({ msg: err, status: 500 });
-                    resolve(token);
+                jwt.sign(payload, process.env.SECRET_KEY, options, (err,token) => {
+                    if (err) return reject({ msg: err, status: 500, });
+                     return resolve({ token, email,role });
+                    
                 });
-                // resolve(isPasswordValid);
+                 //resolve(isPasswordValid);
+                 //resolve(result);
             });
         });
     });

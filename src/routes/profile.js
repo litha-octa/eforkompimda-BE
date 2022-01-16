@@ -3,9 +3,9 @@ const userModel = require('../controllers/profile');
 const multerUpload = require('../middle/upload');
 
 // UPDATE 
-Router.patch('/:id', multerUpload.any(), userModel.updateUserById);
+Router.patch('/', multerUpload.any(), userModel.updateUserById);
 
-Router.get("/:id", multerUpload.any(), userModel.getUser);
+Router.get("/:email", userModel.getUser);
 
 
 module.exports = Router;

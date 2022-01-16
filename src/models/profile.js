@@ -38,10 +38,10 @@ exports.updateUserById = (data, user_id) => {
     });
 };
 
-exports.getUser = (user_id) => {
-  const qs = "SELECT * FROM user WHERE user_id = ? ";
+exports.getUser = (email) => {
+  const qs = "SELECT * FROM user WHERE email = ? ";
   return new Promise((resolve, reject) => {
-    dbConn.query(qs, user_id, (err, result) => {
+    dbConn.query(qs, email, (err, result) => {
       if (err) {
         reject({ status: 500 });
       } else {

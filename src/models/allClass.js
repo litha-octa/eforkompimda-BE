@@ -41,58 +41,94 @@ newClass.findBySearch = function (qsValue) {
 };
 
 
-newClass.sortlevel = function (qsValue) {
+newClass.findById = (id) => {
+  const qs = "Select all_class.class_id AS 'ID', all_class.class_name AS 'Class Name', category.category_name AS 'Category', all_class.description AS 'Description',  level.level_name AS 'Level', all_class.pricing AS 'Price', all_class.schedule AS 'Schedule', all_class.avatar AS 'Image' from all_class  INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id  WHERE class_id= ?";
+  return new Promise((resolve, reject) => {
+    dbConn.query(qs, id, (err, result) => {
+      if (err) {
+        reject({ status: 500 });
+        console.log("msg : Masalah Pada Server");
+      } else {
+        if (result.length === 0)
+          return reject({
+            status: 401,
+            success: false,
+            msg: "barang tidak ditemukan",
+          });
+        resolve(result);
+      }
+    });
+  });
+};
+
+newClass.sort = function (qsValue) {
     return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where level_id ORDER BY ? ?", qsValue, (err, res) => {
+        dbConn.query(
+          "Select all_class.class_name, category.category_name AS 'category',all_class.description, level.level_name AS 'level', all_class.pricing  FROM all_class JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id ORDER BY ? ?",
+          qsValue,
+          (err, res) => {
             if (err) {
-                reject(err);
+              reject(err);
             } else {
-                resolve(res);
+              resolve(res);
             }
-        });
+          }
+        );
     });
 };
-newClass.sortcategory = function (qsValue) {
-    return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where category_id ORDER BY ? ?", qsValue, (err, res) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(res);
-            }
-        });
-    });
-};
-newClass.sortpricing = function (qsValue) {
-    return new Promise((resolve, reject) => {
-        dbConn.query("Select * from all_class where pricing ORDER BY ? ?", qsValue, (err, res) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(res);
-            }
-        });
-    });
-};
+// newClass.sortcategory = function (qsValue) {
+//     return new Promise((resolve, reject) => {
+//         dbConn.query(
+//           "Select all_class.class_name, category.category_name AS 'category',all_class.description, level.level_name AS 'level', all_class.pricing  FROM all_class JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id ORDER BY ? ?",
+//           qsValue,
+//           (err, res) => {
+
+//             if (err) {
+//               reject(err);
+//             } else {
+//               resolve(res);
+//             }
+//           }
+//         );
+//     });
+// };
+// newClass.sortpricing = function (qsValue) {
+//     return new Promise((resolve, reject) => {
+//         dbConn.query(
+//           "Select all_class.class_name, category.category_name AS 'category',all_class.description, level.level_name AS 'level', all_class.pricing  FROM all_class JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id  ORDER BY ? ?",
+//           qsValue,
+//           (err, res) => {
+//             if (err) {
+//               reject(err);
+//             } else {
+//               resolve(res);
+//             }
+//           }
+//         );
+//     });
+// };
 
 
 
 newClass.filterCategory = function (qsValue) {
      return new Promise((resolve, reject) => {
-    dbConn.query("Select * from all_class where category_id like ? ", qsValue,  (err, res) => {
+    dbConn.query(
+      "Select all_class.class_name, category.category_name AS 'category',all_class.description, level.level_name AS 'level', all_class.pricing FROM all_class JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id where category.category_id like ?",
+      qsValue,
+      (err, res) => {
         if (err) {
-            reject(err);
+          reject(err);
+        } else {
+          resolve(res);
         }
-        else {
-            resolve(res);
-        }
-        });
+      }
+    );
      });
 }; 
 newClass.filterLevel = function (qsValue) {
   return new Promise((resolve, reject) => {
     dbConn.query(
-      "Select * from all_class where level_id like ? ",
+      "Select all_class.class_name, category.category_name AS 'category',all_class.description, level.level_name AS 'level', all_class.pricing FROM all_class JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id where level.level_id like ?",
       qsValue,
       (err, res) => {
         if (err) {
@@ -107,7 +143,7 @@ newClass.filterLevel = function (qsValue) {
 newClass.filterPricing = function (qsValue) {
   return new Promise((resolve, reject) => {
     dbConn.query(
-      "Select * from all_class where pricing like ? ",
+      "Select all_class.class_name, category.category_name AS 'category',all_class.description, level.level_name AS 'level', all_class.pricing FROM all_class JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id where pricing like ?",
       qsValue,
       (err, res) => {
         if (err) {
@@ -119,58 +155,6 @@ newClass.filterPricing = function (qsValue) {
     );
   });
 }; 
-
-// newClass.findBycategory = function (category, result) {
-//     dbConn.query("Select * from all_class where category = ? ", category, function (err, res) {
-//         if (err) {
-//             console.log("error: ", err);
-//             result(err, null);
-//         }
-//         else {
-//             result(null, res);
-//         }
-//     });
-// };
-
-// newClass.findBylevel = function (level, result) {
-//     dbConn.query("Select * from all_class where level = ? ", level, function (err, res) {
-//         if (err) {
-//             console.log("error: ", err);
-//             result(err, null);
-//         }
-//         else {
-
-//             result(null, res);
-//         }
-//     });
-// };
-
-// newClass.findBypricing = function (pricing, result) {
-//     dbConn.query("Select * from all_class where pricing = ? ", pricing, function (err, res) {
-//         if (err) {
-//             console.log("error: ", err);
-//             result(err, null);
-//         }
-//         else {
-//             result(null, res);
-//         }
-//     });
-// };
-
-// newClass.findAll = function (result) {
-//     dbConn.query("SELECT class_id, class_name, category.category_name, description, level.level_name, pricing FROM all_class INNER JOIN category on all_class.category_id=category.category_id JOIN level on all_class.level_id=level.level_id", function (err, res) {
-//         if (err) {
-//             console.log("error: ", err);
-//             result(null, err);
-//         }
-//         else {
-//             console.log('class name : ', res);
-//             result(null, res);
-//         }
-//     });
-// };
-
-
 
 newClass.update = function (class_id, all_class, result) {
     dbConn.query("UPDATE all_class SET class_name=?,category=?,description=?,level=?,pricing=? WHERE class_id = ?",

@@ -4,8 +4,8 @@ const authModel = require("../models/auth");
 const login = (req, res) => {
     authModel
         .login(req.body)
-        .then((result) => {
-            writeResponse(res, null, 200, { token: result });
+        .then((data) => {
+            writeResponse(res, null, 200, {data});
         })
         .catch((err) => {
             writeError(res, err.status, err.msg);

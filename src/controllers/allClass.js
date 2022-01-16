@@ -1,5 +1,5 @@
 'use strict';
-//const { writeResponse, writeError } = require('../helpers/response');
+const { writeResponse, writeError } = require('../helpers/response');
 const mysql = require("mysql");
 const newClass = require('../models/allClass');
 
@@ -13,6 +13,23 @@ exports.findAll = function (req, res) {
     }
     );
 };
+
+exports.findById = (req, res) => {
+  const id = req.params.id;
+  newClass
+    .findById(id)
+    .then((result) => {
+      writeResponse(res, null, 200, result);
+    })
+    .catch((err) => {
+      writeError(res, err.status, {
+        success: err.success,
+        conflict: err.conflict,
+        message: err.msg,
+      });
+    });
+};
+
 
 exports.create = function (req, res) {
 
@@ -64,7 +81,7 @@ exports.getdata = function (req, res) {
         .then(result => { res.json(result); })
         .catch(err => { res.send(err); })
 };
-exports.sortlevel = function (req, res) {
+exports.sort = function (req, res) {
     const { sort } = req.query
     const sortValue = sort.split("-").map((el) => {
         switch (el) {
@@ -77,45 +94,45 @@ exports.sortlevel = function (req, res) {
         }
     })
     const qsValue = [...sortValue]
-    newClass.sortlevel(qsValue)
+    newClass.sort(qsValue)
         .then(result => { res.json(result); })
         .catch(err => { res.send(err); })
 };
-exports.sortcategory = function (req, res) {
-    const { sort } = req.query
-    const sortValue = sort.split("-").map((el) => {
-        switch (el) {
-            case "AZ":
-                return mysql.raw("ASC");
-            case "ZA":
-                return mysql.raw("DESC");
-            default:
-                return mysql.raw(el);
-        }
-    })
-    const qsValue = [...sortValue]
-    newClass.sortcategory(qsValue)
-        .then(result => { res.json(result); })
-        .catch(err => { res.send(err); })
-};
-exports.sortpricing = function (req, res) {
-    const { sort } = req.query
-    const sortValue = sort.split("-").map((el) => {
-        switch (el) {
-            case "AZ":
-                return mysql.raw("ASC");
-            case "ZA":
-                return mysql.raw("DESC");
-            default:
-                return mysql.raw(el);
-        }
-    })
-    const qsValue = [...sortValue]
-    newClass.sortpricing(qsValue)
-        .then(result => { res.json(result); })
-        .catch(err => { res.send(err); })
-    return;
-};
+// exports.sortcategory = function (req, res) {
+//     const { sort } = req.query
+//     const sortValue = sort.split("-").map((el) => {
+//         switch (el) {
+//             case "AZ":
+//                 return mysql.raw("ASC");
+//             case "ZA":
+//                 return mysql.raw("DESC");
+//             default:
+//                 return mysql.raw(el);
+//         }
+//     })
+//     const qsValue = [...sortValue]
+//     newClass.sortcategory(qsValue)
+//         .then(result => { res.json(result); })
+//         .catch(err => { res.send(err); })
+// };
+// exports.sortpricing = function (req, res) {
+//     const { sort } = req.query
+//     const sortValue = sort.split("-").map((el) => {
+//         switch (el) {
+//             case "AZ":
+//                 return mysql.raw("ASC");
+//             case "ZA":
+//                 return mysql.raw("DESC");
+//             default:
+//                 return mysql.raw(el);
+//         }
+//     })
+//     const qsValue = [...sortValue]
+//     newClass.sortpricing(qsValue)
+//         .then(result => { res.json(result); })
+//         .catch(err => { res.send(err); })
+//     return;
+// };
 
 exports.filterCategory = function (req, res) {
     const { search } = req.query
@@ -173,36 +190,6 @@ exports.filterPricing = function (req, res) {
 };
 
 
-
-// exports.findBy = function (req, res) {
-//     switch (req.params.pilih) {
-//         // case "id": return newClass.findByid(req.params.value, function (err, all_class) {
-//         //     if (err)
-//         //         res.send(err);
-//         //     res.json(all_class);
-//         // });
-//         case "category_id": return newClass.filter(req.params.value, function (err, all_class) {
-//             const { search } = req.query;
-//             let searchValue;
-//             let sortValue;
-//             if (search) {
-//               searchValue = "%" + search + "%";
-//             } else {
-//               searchValue = "%%";
-//             }
-//         });
-        // case "level_id": return newClass.findBylevel(req.params.value, function (err, all_class) {
-        //     if (err)
-        //         res.send(err);
-        //     res.json(all_class);
-        // });
-        // case "pricing": return newClass.findBypricing(req.params.value, function (err, all_class) {
-        //     if (err)
-        //         res.send(err);
-        //     res.json(all_class);
-        // });
-//     }
-// };
 
 exports.update = function (req, res) {
     if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
