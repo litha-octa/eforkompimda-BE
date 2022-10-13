@@ -25,9 +25,9 @@ const userClass = require('./src/routes/userClass')
 
 
 app.use('/api/v1/newclass', newclassRoutes)
-app.use('/api/v1/auth', loginRegist)
+app.use('/authentication', loginRegist)
 app.use('/api/v1/up', upload)
-app.use('/api/v1/usr', upprof)
+app.use('/get-user', upprof)
 app.use('/api/v1/usrcls', userClass)
 
 

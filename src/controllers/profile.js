@@ -55,7 +55,7 @@ exports.updateUserById = (req, res) => {
     const { files } = req;
     const avatar = files.length > 0 ? `/images/${files[0].filename}` : null;
     const data = files.length > 0 ? { ...req.body, avatar } : { ...req.body };
-    const userid = req.token__user_id;
+    const userid = req.params.id;
     userModel
         .updateUserById(data, userid)
         .then((result) => {
@@ -71,9 +71,9 @@ exports.updateUserById = (req, res) => {
 };
 
 exports.getUser = (req, res) => {
-    const userId = req.params.email
+    const nik = req.params.nik
     userModel
-        .getUser(userId)
+        .getUser(nik)
         .then((result) => {
             writeResponse(res, null, 200, result);
         })
@@ -84,6 +84,22 @@ exports.getUser = (req, res) => {
                 message: err.msg,
             });
         });
+};
+
+exports.getUserToken = (req, res) => {
+  const userId = req.params.token;
+  userModel
+    .getUser(userId)
+    .then((result) => {
+      writeResponse(res, null, 200, result);
+    })
+    .catch((err) => {
+      writeError(res, err.status, {
+        success: err.success,
+        conflict: err.conflict,
+        message: err.msg,
+      });
+    });
 };
 
 //module.exports = updateUserById;

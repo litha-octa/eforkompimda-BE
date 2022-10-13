@@ -38,10 +38,10 @@ exports.updateUserById = (data, user_id) => {
     });
 };
 
-exports.getUser = (email) => {
-  const qs = "SELECT * FROM user WHERE email = ? ";
+exports.getUser = (nik) => {
+  const qs = "SELECT * FROM user WHERE nik = ? ";
   return new Promise((resolve, reject) => {
-    dbConn.query(qs, email, (err, result) => {
+    dbConn.query(qs, nik, (err, result) => {
       if (err) {
         reject({ status: 500 });
       } else {
@@ -51,12 +51,12 @@ exports.getUser = (email) => {
             success: false,
             msg: "This account does not exist",
           });
-
-        result[0].role = result[0].role_id === 1 ? "student" : "teacher";
         resolve(result);
       }
     });
   });
 };
+
+
 
 //module.exports = updateUserById;

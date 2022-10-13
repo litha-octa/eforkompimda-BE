@@ -4,9 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const register = (body) => {
     return new Promise((resolve, reject) => {
-        const { password } = body;
-        // const qs = "INSERT user.name,user.email, user.password, role.role_name AS 'role' INTO user JOIN role ON user.role_id = role.role_id SET ?";
-        const qs = "INSERT INTO user SET ?";
+        const { password } = body;const qs = "INSERT INTO user SET ?";
         bcrypt.hash(password, 10, (err, encryptedPass) => {
             if (err) return reject(err);
 
@@ -29,11 +27,11 @@ const register = (body) => {
 
 const login = (body) => {
     return new Promise((resolve, reject) => {
-        const { name, password } = body;
+        const { nik, password } = body;
         const qs =
             //"SELECT user.name, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE user.email= ?";
-            "SELECT user.user_id, user.name, user.email, user.avatar, user.password ,role.role_name AS 'role' FROM user JOIN role ON user.role_id = role.role_id WHERE  user.email= ? ";
-        dbConn.query(qs, name, (err, result) => {
+            "SELECT * FROM user WHERE  user.nik= ? ";
+        dbConn.query(qs, nik, (err, result) => {
             if (err) return reject({ msg: err, status: 500 });
             if (result.length === 0)
                 return reject({ msg: "Email or Password is Wrong", status: 401 });
@@ -55,7 +53,7 @@ const login = (body) => {
                 };
                 jwt.sign(payload, process.env.SECRET_KEY, options, (err,token) => {
                     if (err) return reject({ msg: err, status: 500, });
-                     return resolve({ token, email,role });
+                     return resolve({ token, nik });
                     
                 });
                  //resolve(isPasswordValid);

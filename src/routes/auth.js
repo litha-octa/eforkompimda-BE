@@ -8,7 +8,7 @@ const autcontroller = require("../controllers/auth");
 router.post("/", autcontroller.login);
 
 //REGISTER
-router.post("/regis", autcontroller.register);
+router.post("/register", autcontroller.register);
 
 
 module.exports = router;
