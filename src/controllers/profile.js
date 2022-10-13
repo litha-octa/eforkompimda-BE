@@ -86,6 +86,22 @@ exports.getUser = (req, res) => {
         });
 };
 
+exports.getAllUser = (req, res) => {
+  const nik = req.params.nik;
+  userModel
+    .getAllUser(nik)
+    .then((result) => {
+      writeResponse(res, null, 200, result);
+    })
+    .catch((err) => {
+      writeError(res, err.status, {
+        success: err.success,
+        conflict: err.conflict,
+        message: err.msg,
+      });
+    });
+};
+
 exports.getUserToken = (req, res) => {
   const userId = req.params.token;
   userModel

@@ -6,6 +6,7 @@ const multerUpload = require('../middle/upload');
 Router.patch('/:id', multerUpload.any(), userModel.updateUserById);
 
 Router.get("/", userModel.getUser);
+Router.get("/all/", userModel.getAllUser);
 Router.get("/:token", userModel.getUserToken);
 
 

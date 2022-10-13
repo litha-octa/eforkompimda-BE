@@ -16,19 +16,13 @@ app.use(morgan('dev'))
 app.get('/', (req, res) => {
   res.send("Hello World");
 });
-const newclassRoutes = require('./src/routes/all_class.routes')
 const loginRegist = require('./src/routes/auth')
-const upload = require('./src/routes/upload')
 const upprof = require('./src/routes/profile')
-const userClass = require('./src/routes/userClass')
 
 
 
-app.use('/api/v1/newclass', newclassRoutes)
 app.use('/authentication', loginRegist)
-app.use('/api/v1/up', upload)
 app.use('/get-user', upprof)
-app.use('/api/v1/usrcls', userClass)
 
 
 
