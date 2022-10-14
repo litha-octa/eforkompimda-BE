@@ -7,6 +7,7 @@ const multerUpload = require("../middle/upload");
 const auth = require("../controllers/auth");
 const profile = require("../controllers/profile");
 const review =require("../controllers/review")
+const sentiment =require('../controllers/sentiment');
 
 //LOGIN
 router.post("/authentication/", auth.login);
@@ -27,6 +28,9 @@ router.get("/user-review/by/:id", review.getReviewByUser);
 router.get("/user-review/:id", review.getReviewById);
 
 router.get("/user-review", review.getAllReview);
+
+
+router.get('/sentiment-data/:id', sentiment.getCountSentiment);
 
 // router.get("/user/:nik", profile.getUserToken);
 
