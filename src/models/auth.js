@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const register = (body) => {
     return new Promise((resolve, reject) => {
-        const { password } = body;const qs = "INSERT INTO user SET ?";
+        const { password } = body;
+        const qs = "INSERT INTO user SET ?";
         bcrypt.hash(password, 10, (err, encryptedPass) => {
             if (err) return reject(err);
 

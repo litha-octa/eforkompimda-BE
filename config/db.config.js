@@ -9,6 +9,13 @@ const config = {
     password: DB_PASSWORD,
     database: DB_DATABASE
 }
+
+// const config = {
+//   host: "165.22.242.111",
+//   user: 'admin’@’localhost',
+//   password: 'P4nRbZ!0k#20a',
+//   database: 'eforkompimda',
+// };
 const db = mysql.createConnection(config);
 
 module.exports = db;

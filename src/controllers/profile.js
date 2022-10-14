@@ -70,10 +70,10 @@ exports.updateUserById = (req, res) => {
         });
 };
 
-exports.getUser = (req, res) => {
+exports.getUserByNik = (req, res) => {
     const nik = req.params.nik
     userModel
-        .getUser(nik)
+        .getUserByNik(nik)
         .then((result) => {
             writeResponse(res, null, 200, result);
         })

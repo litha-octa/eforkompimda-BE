@@ -2,10 +2,11 @@ require("dotenv").config();
 const morgan = require('morgan');
 const express = require('express');
 const cors = require('cors');
-const { PORT } = process.env;
+const { PORT, DB_DATABASE } = process.env;
 
 const app = express();
 const port = PORT
+const db = DB_DATABASE;
 app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 app.use(express.json())
@@ -14,15 +15,16 @@ app.use(morgan('dev'))
 
 
 app.get('/', (req, res) => {
-  res.send("Hello World");
+  res.send(db);
 });
-const loginRegist = require('./src/routes/auth')
-const upprof = require('./src/routes/profile')
 
 
 
-app.use('/authentication', loginRegist)
-app.use('/get-user', upprof)
+const serviceRoutes = require('./src/routes')
+
+
+
+app.use("/eforkompimda", serviceRoutes);
 
 
 

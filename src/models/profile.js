@@ -38,7 +38,7 @@ exports.updateUserById = (data, id) => {
     });
 };
 
-exports.getUser = (nik) => {
+exports.getUserByNik = (nik) => {
   const qs = "SELECT * FROM user WHERE nik = ? ";
   return new Promise((resolve, reject) => {
     dbConn.query(qs, nik, (err, result) => {
@@ -59,7 +59,8 @@ exports.getUser = (nik) => {
 
 
 exports.getAllUser = (nik) => {
-  const qs = "SELECT user.username, user.fullname, user.phone, user.email, user.nik FROM user";
+  const qs =
+    "SELECT user.username, user.fullname, user.phone, user.email, user.nik FROM user";
   return new Promise((resolve, reject) => {
     dbConn.query(qs, nik, (err, result) => {
       if (err) {
@@ -76,6 +77,5 @@ exports.getAllUser = (nik) => {
     });
   });
 };
-
 
 //module.exports = updateUserById;
