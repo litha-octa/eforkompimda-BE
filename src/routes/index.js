@@ -10,9 +10,9 @@ const review =require("../controllers/review")
 const sentiment =require('../controllers/sentiment');
 
 //LOGIN
-router.post("/authentication/", auth.login);
+router.post("/login", auth.login);
 //REGISTER
-router.post("/authentication/register", auth.register);
+router.post("/register", auth.register);
 
 
 // UPDATE Profile
